@@ -1,8 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using TestTask.DataManagment;
+using TestTask.Services.Implementations;
+using TestTask.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseMySql(connectionString, new MySqlServerVersion(new Version(11, 3, 2)))); // Пример указания версии 8.0.23
 
+builder.Services.AddScoped<ILinkService, LinkService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

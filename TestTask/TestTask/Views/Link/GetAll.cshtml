@@ -1,0 +1,21 @@
+﻿@model IEnumerable<TestTask.Models.Link>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+      @foreach (var link in Model)
+      {
+          <h1>@link.LongUrl</h1>
+      }
+</div>
+</body>
+</html>
