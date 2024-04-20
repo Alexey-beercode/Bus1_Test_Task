@@ -12,9 +12,49 @@ public class LinkController:Controller
         _linkService = linkService;
     }
 
-    public async Task<IActionResult> GetAll()
+    [HttpGet("redirect/{shortUrl}")]
+    public async Task<IActionResult> RedirectByShortUrl(string shortUrl)
     {
-        var links = await _linkService.GetLinksAsync();
-        return View("GetAll",links);
+        var link = await _linkService.GetLinkByShortUrlAsync(shortUrl);
+        link.Count++;
+        await _linkService.UpdateLinkAsync(link);
+
+        return Redirect(link.LongUrl);
     }
+
+    [HttpGet("/{longUrl}")]
+    public async Task<IActionResult> GetShortUrlByLongUrl(string longUrl)
+    {
+       var shortUrl= _linkService.GetShortUrlByLongurl(longUrl);
+       return Ok(shortUrl);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> CreateLink()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateLink(string url)
+    {
+        if (url==null || url=="")
+        {
+            return BadRequest("Неправильный Url");
+        }
+        await _linkService.CreateLinkAsync(url);
+        return RedirectToAction("Index","Home");
+    }
+
+    public async Task<IActionResult> DeleteLink(int id)
+    {
+        if (id==null)
+        {
+            return BadRequest("Неправильный id");
+        }
+
+        await _linkService.DeleteLinkAsync(id);
+        return RedirectToAction("Index","Home");
+    }
+    
 }

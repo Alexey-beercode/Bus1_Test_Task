@@ -29,7 +29,7 @@ public class LinkService : ILinkService
         var link = new Link
         {
             LongUrl = longUrl,
-            ShortUrl = GenerateShortUrl(),
+            ShortUrl = GenerateShortUrl(longUrl),
             CreatedDate = DateTime.UtcNow,
             Count = 0
         };
@@ -62,11 +62,24 @@ public class LinkService : ILinkService
         return links;
     }
 
-    private string GenerateShortUrl()
+    public string GetShortUrlByLongurl(string longUrl)
     {
-        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        var random = new Random();
-        return new string(Enumerable.Repeat(chars, 6)
-            .Select(s => s[random.Next(s.Length)]).ToArray());
+        return GenerateShortUrl(longUrl);
     }
+
+    private string GenerateShortUrl(string longUrl)
+    {
+        // Берем первые 6 символов длинного URL
+        string baseShortUrl = longUrl.Substring(0, Math.Min(longUrl.Length, 6));
+
+        // Добавляем несколько случайных символов для уникальности
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+        string randomChars = new string(Enumerable.Repeat(chars, 5)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
+
+        // Возвращаем короткий URL, объединяя часть длинного URL и случайные символы
+        return baseShortUrl + randomChars;
+    }
+
 }
