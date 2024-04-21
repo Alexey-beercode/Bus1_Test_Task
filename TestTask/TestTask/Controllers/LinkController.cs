@@ -22,13 +22,7 @@ public class LinkController:Controller
 
         return Redirect(link.LongUrl);
     }
-
-    [HttpGet("/{longUrl}")]
-    public async Task<IActionResult> GetShortUrlByLongUrl(string longUrl)
-    {
-       var shortUrl= _linkService.GetShortUrlByLongurl(longUrl);
-       return Ok(shortUrl);
-    }
+    
 
     [HttpGet]
     public async Task<IActionResult> CreateLink()
@@ -41,7 +35,7 @@ public class LinkController:Controller
     {
         if (url==null || url=="")
         {
-            return BadRequest("Неправильный Url");
+            return View("Error", "Неправильный Url");
         }
         await _linkService.CreateLinkAsync(url);
         return RedirectToAction("Index","Home");
@@ -51,7 +45,7 @@ public class LinkController:Controller
     {
         if (id==null)
         {
-            return BadRequest("Неправильный id");
+            return View("Error", "Неправильный id");
         }
 
         await _linkService.DeleteLinkAsync(id);
@@ -70,7 +64,7 @@ public class LinkController:Controller
     {
         if (link.LongUrl==null||link.Count==null||link.LongUrl==""||link.ShortUrl==null||link.ShortUrl==""||link.CreatedDate==null)
         {
-            return BadRequest("Некоректные данные");
+            return View("Error", "Некоректные данные");
         }
 
         await _linkService.UpdateLinkAsync(link);
