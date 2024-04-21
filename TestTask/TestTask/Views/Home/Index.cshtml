@@ -29,7 +29,7 @@
                                         <td><a href="@Url.Action("RedirectByShortUrl","Link",new {shortUrl=@link.ShortUrl})">@link.ShortUrl</a></td>
                                         <td>@link.Count</td>
                                         <td>@link.CreatedDate.ToLocalTime()</td>
-                                        <td><a class="btn btn-primary" href="@Url.Action("DeleteLink","Link",new {id=@link.Id})">Редактировать</a></td>
+                                        <td><a class="btn btn-primary" href="@Url.Action("UpdateLink","Link",new {id=@link.Id})">Редактировать</a></td>
                                         <td><a class="btn btn-primary" href="@Url.Action("DeleteLink","Link",new {id=@link.Id})">Удалить элемент</a></td>
                                     </tr>
                                 }

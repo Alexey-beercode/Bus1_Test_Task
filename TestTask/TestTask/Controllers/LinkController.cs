@@ -64,5 +64,17 @@ public class LinkController:Controller
         var link =await _linkService.GetLinkAsync(id);
         return View("Update", link);
     }
-    
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateLink(Link link)
+    {
+        if (link.LongUrl==null||link.Count==null||link.LongUrl==""||link.ShortUrl==null||link.ShortUrl==""||link.CreatedDate==null)
+        {
+            return BadRequest("Некоректные данные");
+        }
+
+        await _linkService.UpdateLinkAsync(link);
+        return RedirectToAction("Index", "Home");
+    }
+
 }

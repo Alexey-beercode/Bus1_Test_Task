@@ -42,6 +42,11 @@ public class LinkService : ILinkService
 
     public async Task UpdateLinkAsync(Link link)
     {
+        var linkFromDatabase =await _dbContext.Links.FindAsync(link.Id);
+        if (linkFromDatabase.LongUrl!=link.LongUrl)
+        {
+            link.ShortUrl = GenerateShortUrl(link.LongUrl);
+        }
         _dbContext.Update(link);
         await _dbContext.SaveChangesAsync();
     }
