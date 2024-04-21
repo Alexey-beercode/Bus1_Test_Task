@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TestTask.Models;
 using TestTask.Services.Interfaces;
 
 namespace TestTask.Controllers;
@@ -12,7 +13,7 @@ public class LinkController:Controller
         _linkService = linkService;
     }
 
-    [HttpGet("redirect/{shortUrl}")]
+    [HttpGet("redirect")]
     public async Task<IActionResult> RedirectByShortUrl(string shortUrl)
     {
         var link = await _linkService.GetLinkByShortUrlAsync(shortUrl);
@@ -55,6 +56,13 @@ public class LinkController:Controller
 
         await _linkService.DeleteLinkAsync(id);
         return RedirectToAction("Index","Home");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> UpdateLink(int id)
+    {
+        var link =await _linkService.GetLinkAsync(id);
+        return View("Update", link);
     }
     
 }
