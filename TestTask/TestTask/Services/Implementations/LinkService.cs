@@ -67,11 +67,6 @@ public class LinkService : ILinkService
         return links;
     }
 
-    public string GetShortUrlByLongurl(string longUrl)
-    {
-        return GenerateShortUrl(longUrl);
-    }
-
     private string GenerateShortUrl(string longUrl)
     {
         string baseShortUrl = longUrl.Substring(0, Math.Min(longUrl.Length, 6));

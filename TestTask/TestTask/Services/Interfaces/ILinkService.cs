@@ -10,5 +10,4 @@ public interface ILinkService
     Task UpdateLinkAsync(Link link);
     Task DeleteLinkAsync(int id);
     Task<IEnumerable<Link>> GetLinksAsync();
-    string GetShortUrlByLongurl(string longUrl);
 }
