@@ -49,8 +49,8 @@ public class LinkService : ILinkService
         }
 
         linkFromDatabase.Count = link.Count;
-        linkFromDatabase.ShortUrl = link.ShortUrl;
         linkFromDatabase.CreatedDate = link.CreatedDate;
+        linkFromDatabase.LongUrl = link.LongUrl;
         _dbContext.Update(linkFromDatabase);
         await _dbContext.SaveChangesAsync();
     }

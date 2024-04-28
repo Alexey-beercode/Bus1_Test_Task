@@ -66,7 +66,6 @@ public class LinkController:Controller
         {
             return View("Error", "Некоректные данные");
         }
-
         await _linkService.UpdateLinkAsync(link);
         return RedirectToAction("Index", "Home");
     }
