@@ -62,7 +62,7 @@ public class LinkController:Controller
     [HttpPost]
     public async Task<IActionResult> UpdateLink(Link link)
     {
-        if (link.LongUrl==null||link.Count==null||link.LongUrl==""||link.ShortUrl==null||link.ShortUrl==""||link.CreatedDate==null)
+        if (link.LongUrl==null||link.Count==null||link.LongUrl==""||link.ShortUrl==""||link.CreatedDate==null)
         {
             return View("Error", "Некоректные данные");
         }
